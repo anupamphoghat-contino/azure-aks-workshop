@@ -19,7 +19,7 @@ resources:
       image: python:3-bullseye
 
 variables:
-#  imageRepository: 'apicontagem'
+  imageRepository: 'artifactory-docker-prod-local'
 #  containerRegistry: 'exemplo.azurecr.io'
   tag: '$(Build.BuildId)'
 
@@ -37,7 +37,7 @@ stages:
       displayName: Build and push an image to container registry
       inputs:
         command: buildAndPush
-#        repository: $(imageRepository)
+        repository: $(imageRepository)
         dockerfile: '$(Build.SourcesDirectory)/workshop-app/Dockerfile'
 #        containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
