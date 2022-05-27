@@ -8,7 +8,7 @@ resources:
       type: github
       name: anupamphoghat-contino/azure-aks-workshop
       endpoint: anupamphoghat-contino
-      ref: refs/heads/main
+      ref: refs/heads/master
 
 variables:
   imageName: 'continotest.jfrog.io/artifactory-docker-prod-local/test-image'
