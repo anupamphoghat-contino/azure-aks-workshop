@@ -1,23 +1,13 @@
 trigger: none
 pool:
-  vmImage: ubuntu-20.04
+  vmImage: ubuntu-latest
 
 resources:
   repositories:
     - repository: azure-aks-workshop
       type: github
       name: anupamphoghat-contino/azure-aks-workshop
-#      endpoint: svc-dtm-cicd
       ref: refs/heads/main
-
-  containers:
-    # CI Container, used for tests etc.  Debian is used here as Bash is required
-    - container: node
-      image: node:16-bullseye
-    # Python container for manipulating IaC files
-    - container: python
-      image: python:3-bullseye
-
 
 variables:
   imageName: 'continotest.jfrog.io/artifactory-docker-prod-local/test-image'
@@ -26,28 +16,20 @@ variables:
   imageTag : '$(Build.BuildNumber)'
 
 
-stages:
-- stage: BuildPush
-  displayName: Build & Push
-  jobs:
-  - job: Build
-    displayName: Build 
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/workshop-app/Dockerfile'
-        tags: |
-          $(tag)
-    - task: ArtifactoryDocker@1
-      displayName: "Docker push"
-      inputs:
-        command: 'push'
-        artifactoryService: '$(artifactoryServiceConnection)'
-        targetRepo: '$(targetRepo)'
-        imageName: '$(imageName):$(imageTag)'
+
+steps:
+  - task: Docker@2
+    displayName: Build and push an image to container registry
+    inputs:
+      command: build
+      dockerfile: '$(Build.SourcesDirectory)/workshop-app/Dockerfile'
+      tags: $(imageTag)
+  - task: ArtifactoryDocker@1
+    displayName: "Docker push"
+    inputs:
+      command: 'push'
+      artifactoryService: '$(artifactoryServiceConnection)'
+      targetRepo: '$(targetRepo)'
+      imageName: '$(imageName):$(imageTag)'
 
 
