@@ -18,10 +18,12 @@ resources:
     - container: python
       image: python:3-bullseye
 
+
 variables:
-  imageRepository: 'artifactory-docker-prod-local'
-  containerRegistry: 'continotest.jfrog.io'
-  tag: '$(Build.BuildId)'
+  imageName: 'continotest.jfrog.io/artifactory-docker-prod-local/test-image'
+  artifactoryServiceConnection : 'jfrog'
+  targetRepo : 'artifactory-docker-prod-local'
+  imageTag : '$(Build.BuildNumber)'
 
 
 stages:
@@ -36,13 +38,16 @@ stages:
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
+        command: build
         dockerfile: '$(Build.SourcesDirectory)/workshop-app/Dockerfile'
-        containerRegistry: $(containerRegistry)
         tags: |
           $(tag)
-    - bash: |
-        # push to registry and stream metadata to Reliza Hub
-        echo "DEBUG push latest: docker push $(containerRegistry)/$(imageRepository):latest"
+    - task: ArtifactoryDocker@1
+      displayName: "Docker push"
+      inputs:
+        command: 'push'
+        artifactoryService: '$(artifactoryServiceConnection)'
+        targetRepo: '$(targetRepo)'
+        imageName: '$(imageName):$(imageTag)'
+
 
