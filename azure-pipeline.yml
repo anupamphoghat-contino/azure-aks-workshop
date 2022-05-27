@@ -20,7 +20,7 @@ resources:
 
 variables:
   imageRepository: 'artifactory-docker-prod-local'
-#  containerRegistry: 'exemplo.azurecr.io'
+  containerRegistry: 'continotest.jfrog.io'
   tag: '$(Build.BuildId)'
 
 
@@ -39,7 +39,7 @@ stages:
         command: buildAndPush
         repository: $(imageRepository)
         dockerfile: '$(Build.SourcesDirectory)/workshop-app/Dockerfile'
-#        containerRegistry: $(dockerRegistryServiceConnection)
+        containerRegistry: $(containerRegistry)
         tags: |
           $(tag)
 
