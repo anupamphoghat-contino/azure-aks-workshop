@@ -1,0 +1,45 @@
+trigger: none
+pool:
+  vmImage: ubuntu-20.04
+
+resources:
+  repositories:
+    - repository: azure-aks-workshop
+      type: github
+      name: anupamphoghat-contino/azure-aks-workshop
+#      endpoint: svc-dtm-cicd
+      ref: refs/heads/main
+
+  containers:
+    # CI Container, used for tests etc.  Debian is used here as Bash is required
+    - container: node
+      image: node:16-bullseye
+    # Python container for manipulating IaC files
+    - container: python
+      image: python:3-bullseye
+
+variables:
+#  imageRepository: 'apicontagem'
+#  containerRegistry: 'exemplo.azurecr.io'
+  tag: '$(Build.BuildId)'
+
+
+stages:
+- stage: BuildPush
+  displayName: Build & Push
+  jobs:
+  - job: Build
+    displayName: Build 
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+#        repository: $(imageRepository)
+        dockerfile: '$(Build.SourcesDirectory)/workshop-app/Dockerfile'
+#        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+
