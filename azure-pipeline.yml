@@ -13,9 +13,9 @@ resources:
       ref: refs/heads/master
 
 variables:
-  imageName: 'continotest.jfrog.io/artifactory-docker-prod-local/'
+  imageName: 'continotest.jfrog.io/artifactory-docker-prod-local/test-image'
   artifactoryServiceConnection : 'jfrog'
-  targetRepo : 'artifactory-docker-prod-local'
+  targetRepo : 'artifactory-docker-prod-local/test-image'
   imageTag : '$(Build.BuildNumber)'
 
 steps:
