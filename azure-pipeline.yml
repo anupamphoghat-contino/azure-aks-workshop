@@ -1,4 +1,6 @@
-trigger: none
+trigger:
+  - master
+
 pool:
   vmImage: ubuntu-latest
 
@@ -11,6 +13,7 @@ resources:
       ref: refs/heads/master
 
 variables:
+  imageName: 'continotest.jfrog.io/artifactory-docker-prod-local/'
   artifactoryServiceConnection : 'jfrog'
   targetRepo : 'artifactory-docker-prod-local'
   imageTag : '$(Build.BuildNumber)'
@@ -28,3 +31,4 @@ steps:
       command: 'push'
       artifactoryService: '$(artifactoryServiceConnection)'
       targetRepo: '$(targetRepo)'
+      imageName: '$(imageName):$(imageTag)'
