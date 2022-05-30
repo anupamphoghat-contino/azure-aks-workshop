@@ -26,7 +26,7 @@ steps:
     inputs:
       command: build
       containerRegistry: '$(dockerRegistryServiceConnection)'
-      dockerfile: '$(Build.SourcesDirectory)/workshop-app/Dockerfile'
+      dockerfile: '""/workshop-app/Dockerfile'
       repository: $(sourceRepo)
       tags: $(imageTag)
 
