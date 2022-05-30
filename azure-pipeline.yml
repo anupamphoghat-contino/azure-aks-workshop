@@ -13,7 +13,7 @@ resources:
       ref: refs/heads/master
 
 variables:
-  imageName: 'continotest.jfrog.io/artifactory-docker-prod-local/test-image'
+  imageName: 'continotest.jfrog.io/artifactory/artifactory-docker-prod-local/test-image'
   artifactoryServiceConnection : 'jfrog'
   targetRepo : 'artifactory-docker-prod-local/test-image'
   imageTag : '$(Build.BuildNumber)'
@@ -26,7 +26,7 @@ steps:
       dockerfile: '$(Build.SourcesDirectory)/workshop-app/Dockerfile'
       repository: $(imageName)
       tags: $(imageTag)
-      
+
   - task: ArtifactoryDocker@1
     displayName: "Docker push"
     inputs:
