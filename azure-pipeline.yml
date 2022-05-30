@@ -24,7 +24,9 @@ steps:
     inputs:
       command: build
       dockerfile: '$(Build.SourcesDirectory)/workshop-app/Dockerfile'
+      repository: $(imageName)
       tags: $(imageTag)
+      
   - task: ArtifactoryDocker@1
     displayName: "Docker push"
     inputs:
