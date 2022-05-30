@@ -15,8 +15,9 @@ resources:
 variables:
   imageName: 'continotest.jfrog.io/artifactory/artifactory-docker-prod-local/test-image'
   artifactoryServiceConnection : 'jfrog'
-  targetRepo : 'artifactory-docker-prod-local'
+  targetRepo : 'artifactory-docker-prod-local/test-image'
   imageTag : '$(Build.BuildNumber)'
+  imageRepo: 'artifactory-docker-prod-local/test-image'
 
 steps:
   - task: Docker@2
@@ -24,7 +25,7 @@ steps:
     inputs:
       command: build
       dockerfile: '$(Build.SourcesDirectory)/workshop-app/Dockerfile'
-      repository: $(imageName)
+      repository: $(imageRepo)
       tags: $(imageTag)
 
   - task: ArtifactoryDocker@1
