@@ -13,11 +13,13 @@ resources:
       ref: refs/heads/master
 
 variables:
+  artifactoryDomain: continotest.jfrog.io
   imageName: 'continotest.jfrog.io/artifactory-docker-prod-local/test-image'
   artifactoryServiceConnection : 'jfrog'
   dockerRegistryServiceConnection: 'dockerhub'
   targetRepo : 'artifactory-docker-prod-local'
-  sourceRepo: 'test-image'
+#  sourceRepo: 'test-image'
+  sourceRepo: 'artifactory-docker-prod-local/test-image'
   imageTag : '$(Build.BuildNumber)'
 
 steps:
@@ -25,9 +27,9 @@ steps:
     displayName: Build and push an image to container registry
     inputs:
       command: build
-      containerRegistry: '$(dockerRegistryServiceConnection)'
-      dockerfile: '**/workshop-app/Dockerfile'
-      repository: $(sourceRepo)
+#      containerRegistry: '$(dockerRegistryServiceConnection)'
+      dockerfile: '**/Dockerfile'
+      repository: $(artifactoryDomain)/$(sourceRepo)
       tags: $(imageTag)
 
   - task: ArtifactoryDocker@1
@@ -36,4 +38,4 @@ steps:
       command: 'push'
       artifactoryService: '$(artifactoryServiceConnection)'
       targetRepo: '$(targetRepo)'
-      imageName: '$(imageName):$(imageTag)'
+      imageName: '$(artifactoryDomain)/$(sourceRepo):$(imageTag)'
