@@ -25,7 +25,7 @@ steps:
     displayName: Build and push an image to container registry
     inputs:
       command: build
-      containerRegistry: '$(dockerRegistryServiceConnection)'
+#      containerRegistry: '$(dockerRegistryServiceConnection)'
       dockerfile: '**/workshop-app/Dockerfile'
       repository: '$(targetRepo)/$(sourceRepo)'
       tags: $(imageTag)
