@@ -1,10 +1,4 @@
-ARG BASEIMAGE
-
-FROM $BASEIMAGE
-
-#FROM nginx
-
-RUN echo $BASEIMAGE
+FROM nginx:latest
 
 RUN rm /etc/nginx/conf.d/*
 
