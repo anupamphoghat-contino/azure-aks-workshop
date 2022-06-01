@@ -27,7 +27,7 @@ steps:
       command: build
       containerRegistry: '$(dockerRegistryServiceConnection)'
       dockerfile: '**/workshop-app/Dockerfile'
-      repository: $(sourceRepo)
+      repository: '$(targetRepo)/$(sourceRepo)'
       tags: $(imageTag)
 
   - task: ArtifactoryDocker@1
@@ -37,4 +37,4 @@ steps:
       artifactoryService: '$(artifactoryServiceConnection)'
       targetRepo: '$(targetRepo)'
       imageName: '$(imageName):$(imageTag)'
-      collectBuildInfo: false
+#      collectBuildInfo: false
