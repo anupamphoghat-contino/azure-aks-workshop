@@ -27,7 +27,7 @@ steps:
       command: build
 #      containerRegistry: '$(dockerRegistryServiceConnection)'
       dockerfile: '**/workshop-app/Dockerfile'
-      repository: '$(targetRepo)/$(sourceRepo)'
+      repository: 'imageName'
       tags: $(imageTag)
 
   - task: ArtifactoryDocker@1
