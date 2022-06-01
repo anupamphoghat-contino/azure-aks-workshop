@@ -26,7 +26,7 @@ steps:
     inputs:
       command: build
 #      containerRegistry: '$(dockerRegistryServiceConnection)'
-      dockerfile: '/Dockerfile'
+      dockerfile: './Dockerfile'
       repository: '$(imageName)'
       tags: $(imageTag)
 
