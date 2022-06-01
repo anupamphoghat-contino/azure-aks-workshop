@@ -15,7 +15,7 @@ resources:
 variables:
   imageName: 'continotest.jfrog.io/artifactory-docker-prod-local/test-image'
   artifactoryServiceConnection : 'jfrog'
-  dockerRegistryServiceConnection: 'dockerhub'
+  dockerRegistryServiceConnection: 'dockerregistry'
   targetRepo : 'artifactory-docker-prod-local'
   sourceRepo: 'test-image'
   imageTag : '$(Build.BuildNumber)'
