@@ -14,8 +14,8 @@ resources:
 
 variables:
   imageName: 'continotest.jfrog.io/artifactory-docker-prod-local/test-image'
-  artifactoryServiceConnection : 'jfrog'
-  dockerRegistryServiceConnection: 'dockerregistry'
+  artifactoryServiceConnection : 'azuredevopsjfrog'
+#  dockerRegistryServiceConnection: 'dockerregistry'
   targetRepo : 'artifactory-docker-prod-local'
   sourceRepo: 'test-image'
   imageTag : '$(Build.BuildNumber)'
@@ -26,7 +26,7 @@ steps:
     inputs:
       command: build
 #      containerRegistry: '$(dockerRegistryServiceConnection)'
-      dockerfile: '**/workshop-app/Dockerfile'
+      dockerfile: '/Dockerfile'
       repository: '$(imageName)'
       tags: $(imageTag)
 
