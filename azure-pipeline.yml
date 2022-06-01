@@ -37,3 +37,4 @@ steps:
       artifactoryService: '$(artifactoryServiceConnection)'
       targetRepo: '$(targetRepo)'
       imageName: '$(imageName):$(imageTag)'
+      collectBuildInfo: false
