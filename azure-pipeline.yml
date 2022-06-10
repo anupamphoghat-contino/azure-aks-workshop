@@ -16,7 +16,8 @@ variables:
   imageName: 'continotest.jfrog.io/artifactory-docker-prod-local/test-image'
   artifactoryServiceConnection : 'azuredevopsjfrog'
 #  dockerRegistryServiceConnection: 'dockerregistry'
-  targetRepo : 'artifactory-docker-prod-local'
+  devRepo : 'artifactory-docker-prod-local'
+  prodRepo : 'default-docker-local'
   sourceRepo: 'test-image'
   imageTag : '$(Build.BuildNumber)'
 
@@ -35,6 +36,16 @@ steps:
     inputs:
       command: 'push'
       artifactoryService: '$(artifactoryServiceConnection)'
-      targetRepo: '$(targetRepo)'
+      targetRepo: '$(devRepo)'
       imageName: '$(imageName):$(imageTag)'
 #      collectBuildInfo: false
+
+
+  - task: ArtifactoryDocker@1
+    displayName: "Docker push"
+    inputs:
+      command: 'push'
+      artifactoryService: '$(artifactoryServiceConnection)'
+      targetRepo: '$(prodRepo)'
+      sourceRepo: '$(devRepo)'
+      imageName: '$(imageName):$(imageTag)'
