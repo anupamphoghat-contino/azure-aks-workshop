@@ -54,7 +54,7 @@ steps:
     inputs:
      script: |
        echo Tagging the image
-       docker tag subudear.jfrog.io/helloworldrepo-docker/helloworld:$(Build.BuildNumber) $(imageName)-prod:$(Build.BuildNumber)
+       docker tag continotest.jfrog.io/artifactory-docker-prod-local/test-image:$(Build.BuildNumber) $(imageName)-prod:$(Build.BuildNumber)
 
   - task: ArtifactoryDocker@1
     displayName: "Docker Promote"
