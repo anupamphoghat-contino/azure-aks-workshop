@@ -42,10 +42,24 @@ steps:
 
 
   - task: ArtifactoryDocker@1
-    displayName: "Docker push"
+    displayName: "Pull image from Artifactory"
+    inputs:
+     command: 'pull'
+     artifactoryService: '$(artifactoryServiceConnection)'
+     sourceRepo: '$(devRepo)'
+     imageName: '$(imageName):$(imageTag)'
+
+  - task: CmdLine@2
+    displayName: "Tag image for Promotion"
+    inputs:
+     script: |
+       echo Tagging the image
+       docker tag subudear.jfrog.io/helloworldrepo-docker/helloworld:$(Build.BuildNumber) $(imageName)-prod:$(Build.BuildNumber)
+
+  - task: ArtifactoryDocker@1
+    displayName: "Docker Promote"
     inputs:
       command: 'push'
       artifactoryService: '$(artifactoryServiceConnection)'
       targetRepo: '$(prodRepo)'
-      sourceRepo: '$(devRepo)'
-      imageName: '$(imageName):$(imageTag)'
+      imageName: '$(imageName)-prod:$(Build.BuildNumber)'
